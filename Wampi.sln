@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wampi", "Wampi\Wampi.csproj", "{2E623864-C4F8-4E01-9983-6E1C4D042AA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2816A144-E7DA-4822-B26D-2E401FC1DCC5}"
+	ProjectSection(SolutionItems) = preProject
+		mariadb.xml = mariadb.xml
+		Notes.txt = Notes.txt
+		phpmyadmin.xml = phpmyadmin.xml
+		sources.xml = sources.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wampi.Plugins.Phpmyadmin", "Wampi.Plugins.Phpmyadmin\Wampi.Plugins.Phpmyadmin.csproj", "{380DDA0B-BE8D-4E5E-968C-2094AFF175A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wampi.Plugins.Mariadb", "Wampi.Plugins.Mariadb\Wampi.Plugins.Mariadb.csproj", "{D872ED94-082E-4DA2-846E-9A79A696017B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wampi.Plugins.Php", "Wampi.Plugins.Php\Wampi.Plugins.Php.csproj", "{BAA5DBB2-970B-4716-A8CD-C2DFF489C626}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wampi.Plugins.Apache", "Wampi.Plugins.Apache\Wampi.Plugins.Apache.csproj", "{D14057DB-9D67-4841-8E18-725051AA979B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wampi.Plugins.Mysql", "Wampi.Plugins.Mysql\Wampi.Plugins.Mysql.csproj", "{0F1ADA9A-EC5C-4EA5-9CA7-368D93E8E988}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E623864-C4F8-4E01-9983-6E1C4D042AA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E623864-C4F8-4E01-9983-6E1C4D042AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E623864-C4F8-4E01-9983-6E1C4D042AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E623864-C4F8-4E01-9983-6E1C4D042AA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{380DDA0B-BE8D-4E5E-968C-2094AFF175A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{380DDA0B-BE8D-4E5E-968C-2094AFF175A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{380DDA0B-BE8D-4E5E-968C-2094AFF175A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{380DDA0B-BE8D-4E5E-968C-2094AFF175A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D872ED94-082E-4DA2-846E-9A79A696017B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D872ED94-082E-4DA2-846E-9A79A696017B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D872ED94-082E-4DA2-846E-9A79A696017B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D872ED94-082E-4DA2-846E-9A79A696017B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA5DBB2-970B-4716-A8CD-C2DFF489C626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA5DBB2-970B-4716-A8CD-C2DFF489C626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA5DBB2-970B-4716-A8CD-C2DFF489C626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA5DBB2-970B-4716-A8CD-C2DFF489C626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D14057DB-9D67-4841-8E18-725051AA979B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14057DB-9D67-4841-8E18-725051AA979B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14057DB-9D67-4841-8E18-725051AA979B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14057DB-9D67-4841-8E18-725051AA979B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F1ADA9A-EC5C-4EA5-9CA7-368D93E8E988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F1ADA9A-EC5C-4EA5-9CA7-368D93E8E988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F1ADA9A-EC5C-4EA5-9CA7-368D93E8E988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F1ADA9A-EC5C-4EA5-9CA7-368D93E8E988}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
