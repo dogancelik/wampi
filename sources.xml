@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sources>
+  <apache>
+    <source version="2.4.10 (VC11)" architecture="64">http://www.apachelounge.com/download/VC11/binaries/httpd-2.4.10-win64-VC11.zip</source>
+    <source version="2.4.10 (VC11)" architecture="32">http://www.apachelounge.com/download/VC11/binaries/httpd-2.4.10-win32-VC11.zip</source>
+    <source version="2.4.10 (VC10)" architecture="64">http://www.apachelounge.com/download/win64/binaries/httpd-2.4.10-win64.zip</source>
+    <source version="2.4.10 (VC10)" architecture="32">http://www.apachelounge.com/download/win32/binaries/httpd-2.4.10-win32.zip</source>
+    <source version="2.2.29 (VC10)" architecture="64">http://www.apachelounge.com/download/win64/binaries/httpd-2.2.29-win64.zip</source>
+    <source version="2.2.29 (VC10)" architecture="32">http://www.apachelounge.com/download/win32/binaries/httpd-2.2.29-win32.zip</source>
+  </apache>
+
+  <mysql>
+    <source version="5.6.21" architecture="64">http://heanet.dl.sourceforge.net/project/mysql.mirror/MySQL%205.6.21/mysql-5.6.21-winx64.zip</source>
+    <source version="5.6.21" architecture="32">http://heanet.dl.sourceforge.net/project/mysql.mirror/MySQL%205.6.21/mysql-5.6.21-win32.zip</source>
+    <source version="5.5.30" architecture="64">http://heanet.dl.sourceforge.net/project/mysql.mirror/MySQL%205.5.30/mysql-5.5.30-winx64.zip</source>
+    <source version="5.5.30" architecture="32">http://heanet.dl.sourceforge.net/project/mysql.mirror/MySQL%205.5.30/mysql-5.5.30-win32.zip</source>
+  </mysql>
+
+  <php>
+    <source version="5.6.3 (VC11, TS)" architecture="64">http://windows.php.net/downloads/releases/php-5.6.3-Win32-VC11-x64.zip</source>
+    <source version="5.6.3 (VC11, TS)" architecture="32">http://windows.php.net/downloads/releases/php-5.6.3-Win32-VC11-x86.zip</source>
+    <source version="5.6.3 (VC11, NTS)" architecture="64">http://windows.php.net/downloads/releases/php-5.6.3-nts-Win32-VC11-x64.zip</source>
+    <source version="5.6.3 (VC11, NTS)" architecture="32">http://windows.php.net/downloads/releases/php-5.6.3-nts-Win32-VC11-x86.zip</source>
+    <source version="5.5.19 (VC11, TS)" architecture="64">http://windows.php.net/downloads/releases/php-5.5.19-Win32-VC11-x64.zip</source>
+    <source version="5.5.19 (VC11, TS)" architecture="32">http://windows.php.net/downloads/releases/php-5.5.19-Win32-VC11-x86.zip</source>
+    <source version="5.5.19 (VC11, NTS)" architecture="64">http://windows.php.net/downloads/releases/php-5.5.19-nts-Win32-VC11-x64.zip</source>
+    <source version="5.5.19 (VC11, NTS)" architecture="32">http://windows.php.net/downloads/releases/php-5.5.19-nts-Win32-VC11-x86.zip</source>
+    <source version="5.4.35 (VC9, TS)" architecture="32">http://windows.php.net/downloads/releases/php-5.4.35-Win32-VC9-x86.zip</source>
+    <source version="5.4.35 (VC9, NTS)" architecture="32">http://windows.php.net/downloads/releases/php-5.4.35-nts-Win32-VC9-x86.zip</source>
+    <source version="5.3.29 (VC9, TS)" architecture="32">http://windows.php.net/downloads/releases/php-5.3.29-Win32-VC9-x86.zip</source>
+    <source version="5.3.29 (VC9, NTS)" architecture="32">http://windows.php.net/downloads/releases/php-5.3.29-nts-Win32-VC9-x86.zip</source>
+  </php>
+
+  <phpmyadmin>
+    <source version="4.2.13 (PHP 5.3, MySQL 5.5)">http://kent.dl.sourceforge.net/project/phpmyadmin/phpMyAdmin/4.2.13/phpMyAdmin-4.2.13-all-languages.zip</source>
+    <source version="4.1.14.7 (PHP 5.3, MySQL 5.5)">http://kent.dl.sourceforge.net/project/phpmyadmin/phpMyAdmin/4.1.14.7/phpMyAdmin-4.1.14.7-all-languages.zip</source>
+    <source version="4.0.10.6 (PHP 5.2, MySQL 5)">http://kent.dl.sourceforge.net/project/phpmyadmin/phpMyAdmin/4.0.10.6/phpMyAdmin-4.0.10.6-all-languages.zip</source>
+  </phpmyadmin>
+
+  <mariadb>
+    <source version="10.0.15" architecture="64">http://nyc2.mirrors.digitalocean.com/mariadb/mariadb-10.0.15/winx64-packages/mariadb-10.0.15-winx64.zip</source>
+    <source version="10.0.15" architecture="32">http://nyc2.mirrors.digitalocean.com/mariadb/mariadb-10.0.15/win32-packages/mariadb-10.0.15-win32.zip</source>
+    <source version="5.5.40" architecture="64">http://nyc2.mirrors.digitalocean.com/mariadb/mariadb-5.5.40/winx64-packages/mariadb-5.5.40-winx64.zip</source>
+    <source version="5.5.40" architecture="32">http://nyc2.mirrors.digitalocean.com/mariadb/mariadb-5.5.40/win32-packages/mariadb-5.5.40-win32.zip</source>
+    <source version="5.3.12" architecture="64">http://nyc2.mirrors.digitalocean.com/mariadb/mariadb-5.3.12/winx64-packages/mariadb-5.3.12-winx64.zip</source>
+    <source version="5.3.12" architecture="32">http://nyc2.mirrors.digitalocean.com/mariadb/mariadb-5.3.12/win32-packages/mariadb-5.3.12-win32.zip</source>
+  </mariadb>
+</sources>
