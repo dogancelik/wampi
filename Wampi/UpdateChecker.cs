@@ -18,7 +18,7 @@ namespace Wampi
 
         private const string UrlDownloadAsset = "https://github.com/{0}/{1}/releases/download/{2}/{3}";
 
-        private static async Task GithubCheck()
+        private static async Task GithubCheck(bool informNoNewVersion)
         {
             var client = new GitHubClient(new ProductHeaderValue("WampiUpdater"));
             var releases = await client.Release.GetAll(RepositoryOwner, RepositoryName);
@@ -46,14 +46,15 @@ namespace Wampi
                 }
                 else
                 {
-                    MessageBox.Show(QuestionNoNewVersion, QuestionNewVersionCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (informNoNewVersion)
+                        MessageBox.Show(QuestionNoNewVersion, QuestionNewVersionCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        public static Task Check()
+        public static Task Check(bool informNoNewVersion = false)
         {
-            return GithubCheck();
+            return GithubCheck(informNoNewVersion);
         }
     }
 }

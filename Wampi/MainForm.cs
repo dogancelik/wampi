@@ -42,8 +42,7 @@ namespace Wampi
         private const string PathPlugins = "plugins";
 
         private const string UrlOfficialSources = "http://dogancelik.github.io/wampi/sources.xml";
-        private const string UrlUpdateCheck = "http://dogancelik.github.io/wampi/update.xml";
-        private const string UrlWhatToDownload = "";
+        private const string UrlWhatToDownload = "https://github.com/dogancelik/wampi/wiki/Help#in-download-tab-what-should-i-download";
 
         private const string TextButtonDownload = "Download";
         private const string TextButtonInstall = "Install";
@@ -54,12 +53,15 @@ namespace Wampi
         private const string TextOverwriteQuestion = "There is already a file named: {0}\nDo you want to overwrite this?";
         private const string TextUnpackHelp = "Clicking \"Install\" will overwrite any existing files in the install directory so do a back-up first.";
         private const string TextUnpack = "Unpacking: {0}";
+        private const string TextUnpackCancelled = "Unpack cancelled";
         private const string TextCouldNotLoad = "Couldn't load URL: {0}";
         private const string TextDownloadCancelled = "Download is cancelled";
         private const string TextDownloadFinished = "Download is finished";
         private const string TextInstallPathRequired = "Please choose an install directory.";
         private const string TextErrorDeleteTemporary = "An error occured when deleting the temporary folder.";
+        private const string TextMoveProcessProgress = "Moving: {0}";
         private const string TextMoveProcessCompleted = "Move process completed";
+        private const string TextMoveProcessCancelled = "Move process cancelled";
         private const string TextQuestionOpenLink = "Do you want to open: {0}";
 
         public MainForm()
@@ -78,10 +80,12 @@ namespace Wampi
             unzipper = new Unzipper();
             unzipper.Progress += UnzipperProgress;
             unzipper.QueueFinished += UnzipperFinished;
+            unzipper.QueueCancelled += UnzipperCancelled;
 
             copier = new FileCopier();
             copier.AllCopyProgress += CopierOnAllCopyProgress;
             copier.AllCopyCompleted += CopierOnAllCopyCompleted;
+            copier.CopyCancelled += CopierOnCopyCancelled;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -100,6 +104,9 @@ namespace Wampi
 
         private void ToggleButton(Button button, bool enable, EventHandler newEvent, EventHandler oldEvent, string newString, string oldString)
         {
+            button.Click -= newEvent; // What a stupid fix for double button click triggering
+            button.Click -= oldEvent;
+
             if (enable)
             {
                 button.Text = newString;
@@ -287,15 +294,13 @@ namespace Wampi
         {
             Action action = delegate
             {
+                Debug.WriteLine("Copy Completed");
                 labelInstallProgress.Text = TextMoveProcessCompleted;
                 progressInstall.Value = 0;
                 ToggleButton(buttonInstall, false, buttonInstall_Click_Cancel, buttonInstall_Click, TextButtonCancel, TextButtonInstall);
             };
 
-            if (InvokeRequired)
-                Invoke((MethodInvoker)(() => action()));
-            else
-                action();
+            Invoke((MethodInvoker)(() => action()));
         }
 
         private void CopierOnAllCopyProgress(FileCopier.FileCopyCompletedEventArgs args)
@@ -306,6 +311,16 @@ namespace Wampi
                 Invoke((MethodInvoker)(() => action()));
             else
                 action();
+        }
+
+        private void CopierOnCopyCancelled()
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                Debug.WriteLine("Copy Cancelled");
+                labelInstallProgress.Text = TextMoveProcessCancelled;
+                progressInstall.Value = 0;
+            });
         }
 
         private void UnzipperProgress(object sender, ExtractProgressEventArgs args)
@@ -328,19 +343,17 @@ namespace Wampi
             }
         }
 
-        private void MoveDirectoryHelper(UnpackMatch unpackMatch)
+        private void UnzipperCancelled()
         {
-            Invoke((MethodInvoker)delegate { labelInstallProgress.Text = "Moving: " + unpackMatch.DisplayName; });
-            var movePath = RootFolderFinder.FindAll(unpackMatch.StartFolder, unpackMatch.FileToFind, unpackMatch.TargetRoot)[0];
-            copier.Files.Clear();
-            copier.AddDirectory(movePath, Path.Combine(textInstallDirectory.Text, unpackMatch.Name), "*.*", SearchOption.AllDirectories);
-            copier.StartCopy();
+            labelInstallProgress.Text = TextUnpackCancelled;
+            progressInstall.Value = 0;
         }
 
         private void UnzipperFinished(Dictionary<string, string> files)
         {
             foreach (var pair in files)
             {
+                bool ret = true;
                 foreach (var rule in unpackRules)
                 {
                     var match = rule.Key.Match(pair.Key);
@@ -348,15 +361,20 @@ namespace Wampi
                     {
                         var unpackMatch = rule.Value;
                         unpackMatch.StartFolder = pair.Value;
-                        MoveDirectoryHelper(unpackMatch);
+
+                        Invoke((MethodInvoker)delegate { labelInstallProgress.Text = String.Format(TextMoveProcessProgress, unpackMatch.DisplayName); });
+                        var movePath = RootFolderFinder.FindAll(unpackMatch.StartFolder, unpackMatch.FileToFind, unpackMatch.TargetRoot)[0];
+                        copier.Files.Clear();
+                        copier.AddDirectory(movePath, Path.Combine(textInstallDirectory.Text, unpackMatch.Name), "*.*", SearchOption.AllDirectories);
+                        ret = copier.StartCopy(); // TODO: To fix -- triggers again after cancelling -- because UnzipperFinished loop continues
                     }
                 }
+                if (!ret) break; // If cancel then break out of loop
             }
         }
 
         private void buttonInstall_Click(object sender, EventArgs e)
         {
-            // TODO: Cancelling unpack/move
             if (listDownloads.CheckedItems.Count == 0) return;
             if (textInstallDirectory.Text.Length == 0)
             {
@@ -373,6 +391,7 @@ namespace Wampi
                 MessageBox.Show(TextErrorDeleteTemporary);
             }
 
+            Debug.WriteLine("Düğmeye bastık");
             foreach (ListViewItem item in listDownloads.CheckedItems)
             {
                 string file = item.Text;
@@ -383,9 +402,11 @@ namespace Wampi
                     if (match.Success) extractTo = pair.Value.Name;
                 }
                 extractTo = Path.Combine(PathTemporary, extractTo);
+                Debug.WriteLine("Q'ya ekleme yapıyoruz");
                 unzipper.AddToQueue(Path.Combine(PathDownload, file), extractTo);
             }
 
+            Debug.WriteLine("Q'yu başlattık");
             unzipper.StartQueue();
             ToggleButton(buttonInstall, true, buttonInstall_Click_Cancel, buttonInstall_Click, TextButtonCancel, TextButtonInstall);
         }
@@ -393,6 +414,7 @@ namespace Wampi
         private void buttonInstall_Click_Cancel(object sender, EventArgs e)
         {
             unzipper.CancelQueue();
+            copier.CancelCopy();
             ToggleButton(buttonInstall, false, buttonInstall_Click_Cancel, buttonInstall_Click, TextButtonCancel, TextButtonInstall);
         }
 
@@ -613,11 +635,6 @@ namespace Wampi
             WindowState = FormWindowState.Normal;
         }
 
-        private void linkOptionsCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(UrlUpdateCheck);
-        }
-
         #endregion Options
 
         #region About
@@ -632,7 +649,7 @@ namespace Wampi
         {
             var oldText = buttonUpdateCheck.Text;
             ToggleButton(buttonUpdateCheck, false, TextLoading);
-            await UpdateChecker.Check();
+            await UpdateChecker.Check(true);
             ToggleButton(buttonUpdateCheck, true, oldText);
         }
 

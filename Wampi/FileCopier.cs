@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -75,6 +76,7 @@ namespace Wampi
 
             if (cancelCopyOperation)
             {
+                CopyCancelled();
                 return CopyProgressResult.PROGRESS_CANCEL;
             }
             else
@@ -100,6 +102,8 @@ namespace Wampi
         public delegate void OnAllCopyCompletedDelegate(AllCopyCompletedEventArgs args);
 
         public event OnAllCopyCompletedDelegate AllCopyCompleted; // This will fire when whole copying progress completes
+
+        public event Action CopyCancelled;
 
         public Dictionary<string, string> Files = new Dictionary<string, string>();
 
@@ -159,8 +163,13 @@ namespace Wampi
             }
         }
 
-        public void StartCopy()
+        private bool cancelCopyOperation = false;
+
+        /// <summary>Starts the copying process.</summary>
+        /// <returns>Returns false if copying process gets cancelled. Returns true if process completes.</returns>
+        public bool StartCopy()
         {
+            cancelCopyOperation = false;
             copiedFiles = 0;
             totalFiles = Files.Count;
             bool returnValue = false;
@@ -195,11 +204,20 @@ namespace Wampi
                     });
             }
 
-            if (AllCopyCompleted != null)
-                AllCopyCompleted(new AllCopyCompletedEventArgs { CopiedFiles = copiedFiles, TotalFiles = totalFiles });
+            if (cancelCopyOperation)
+            {
+                CopyCancelled();
+                return false;
+            }
+            else
+            {
+                if (AllCopyCompleted != null)
+                {
+                    AllCopyCompleted(new AllCopyCompletedEventArgs { CopiedFiles = copiedFiles, TotalFiles = totalFiles });
+                }
+                return true;
+            }
         }
-
-        private bool cancelCopyOperation = false;
 
         public void CancelCopy()
         {
