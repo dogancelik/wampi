@@ -33,27 +33,27 @@
       <UIRef Id="WixUI_ErrorProgressText" />
       <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="SetupTypeDlg"  Order="3">1</Publish>
       <Publish Dialog="SetupTypeDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg"  Order="3">1</Publish>
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
     </UI>
-	</Product>
-
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Wampi">
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Wampi" />
+    <Property Id="WixShellExecTarget" Value="[#Wampi.exe]" />
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Wampi">
           <Directory Id="PluginsFolder" Name="plugins">
           </Directory>
         </Directory>
-			</Directory>
+      </Directory>
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="Wampi" />
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop" />
-		</Directory>
-	</Fragment>
+    </Directory>
 
-	<Fragment>
-		<ComponentGroup Id="ComponentGroup.Main" Directory="INSTALLFOLDER">
-			<Component Id="Component_WampiExe" Guid="2D509EA9-BA18-40B3-AC2E-D8203CED6749">
+    <ComponentGroup Id="ComponentGroup.Main" Directory="INSTALLFOLDER">
+      <Component Id="Component_WampiExe" Guid="2D509EA9-BA18-40B3-AC2E-D8203CED6749">
         <File KeyPath="yes" Name="$(var.Wampi.TargetFileName)" Source="$(var.Wampi.TargetPath)"></File>
       </Component>
       <Component>
@@ -88,9 +88,7 @@
         <RegistryValue Root="HKCU" Key="Software\Wampi" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
-	</Fragment>
 
-  <Fragment>
     <ComponentGroup Id="ComponentGroup.Plugins">
       <Component Id="Component_Plugin.Apache" Directory="PluginsFolder">
         <File KeyPath="yes" Name="$(var.Wampi.Plugins.Apache.TargetFileName)" Source="$(var.Wampi.Plugins.Apache.TargetPath)"></File>
@@ -108,5 +106,5 @@
         <File KeyPath="yes" Name="$(var.Wampi.Plugins.Phpmyadmin.TargetFileName)" Source="$(var.Wampi.Plugins.Phpmyadmin.TargetPath)"></File>
       </Component>
     </ComponentGroup>
-  </Fragment>
+	</Product>
 </Wix>
