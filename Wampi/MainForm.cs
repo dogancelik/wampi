@@ -9,7 +9,6 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -37,8 +36,13 @@ namespace Wampi
 
         private Dictionary<Regex, UnpackMatch> unpackRules = new Dictionary<Regex, UnpackMatch>();
 
-        private const string PathDownload = "downloads";
-        private const string PathTemporary = "temporary";
+        private string PathWorkBase = String.Empty;
+        private const string PathDownloadBase = "downloads";
+        private const string PathTemporaryBase = "temporary";
+        private string PathDownload = String.Empty;
+        private string PathTemporary = String.Empty;
+
+
         private const string PathPlugins = "plugins";
 
         private const string UrlOfficialSources = "http://dogancelik.github.io/wampi/sources.xml";
@@ -63,6 +67,7 @@ namespace Wampi
         private const string TextMoveProcessCompleted = "Move process completed";
         private const string TextMoveProcessCancelled = "Move process cancelled";
         private const string TextQuestionOpenLink = "Do you want to open: {0}";
+        private const string TextCanNotFindDirectory = "Can't find directory: {0}";
 
         public MainForm()
         {
@@ -92,8 +97,8 @@ namespace Wampi
         {
             LoadPlugins();
             listDownloads.SmallImageList = imageList;
-            buttonListDownloads_Click(sender, e);
             LoadConfiguration(Properties.Settings.Default.checkForUpdates);
+            buttonListDownloads_Click(sender, e);
             labelVersion.Text += Application.ProductVersion;
         }
 
@@ -596,6 +601,37 @@ namespace Wampi
             {
                 UpdateChecker.Check();
             }
+
+            if (Properties.Settings.Default.downloadDirectory == String.Empty)
+            {
+                radioDownloadDirectoryDefault.Checked = true;
+            }
+            else
+            {
+                radioDownloadDirectoryCustom.Checked = true;
+                textDownloadDirectory.Text = Properties.Settings.Default.downloadDirectory;
+            }
+
+            if (radioDownloadDirectoryDefault.Checked)
+            {
+                PathWorkBase = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Wampi");
+            }
+            else if (radioDownloadDirectoryCustom.Checked)
+            {
+                PathWorkBase = textDownloadDirectory.Text;
+            }
+
+            if (PathWorkBase != String.Empty && !Directory.Exists(PathWorkBase))
+            {
+                Directory.CreateDirectory(PathWorkBase);
+            }
+
+            PathDownload = Path.Combine(PathWorkBase, PathDownloadBase);
+            PathTemporary = Path.Combine(PathWorkBase, PathTemporaryBase);
+
+            Debug.WriteLine(PathWorkBase);
+            Debug.WriteLine(PathDownload);
+            Debug.WriteLine(PathTemporary);
         }
 
         private void checkMinimizeToTray_CheckedChanged(object sender, EventArgs e)
@@ -633,6 +669,36 @@ namespace Wampi
                 Show();
             }
             WindowState = FormWindowState.Normal;
+        }
+
+        private void buttonDownloadDirectoryOpen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(PathWorkBase);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(String.Format(TextCanNotFindDirectory, PathWorkBase), Text, MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void radioDownloadDirectoryDefault_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioDownloadDirectoryDefault.Checked)
+            {
+                Properties.Settings.Default.downloadDirectory = String.Empty;
+            }
+            textDownloadDirectory.Enabled = !radioDownloadDirectoryDefault.Checked;
+        }
+
+        private void textDownloadDirectory_TextChanged(object sender, EventArgs e)
+        {
+            if (radioDownloadDirectoryCustom.Checked)
+            {
+                Properties.Settings.Default.downloadDirectory = textDownloadDirectory.Text;
+            }
         }
 
         #endregion Options

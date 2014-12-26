@@ -74,6 +74,11 @@
             this.labelPluginsHelp = new System.Windows.Forms.Label();
             this.richPlugin = new System.Windows.Forms.RichTextBox();
             this.tabOptions = new System.Windows.Forms.TabPage();
+            this.groupDownloadDirectory = new System.Windows.Forms.GroupBox();
+            this.buttonDownloadDirectoryOpen = new System.Windows.Forms.Button();
+            this.textDownloadDirectory = new System.Windows.Forms.TextBox();
+            this.radioDownloadDirectoryCustom = new System.Windows.Forms.RadioButton();
+            this.radioDownloadDirectoryDefault = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonOptionsSave = new System.Windows.Forms.Button();
             this.checkUpdatesOnStartup = new System.Windows.Forms.CheckBox();
@@ -105,6 +110,7 @@
             this.panel2.SuspendLayout();
             this.flowPluginsTop.SuspendLayout();
             this.tabOptions.SuspendLayout();
+            this.groupDownloadDirectory.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabAbout.SuspendLayout();
             this.SuspendLayout();
@@ -602,6 +608,7 @@
             // 
             // tabOptions
             // 
+            this.tabOptions.Controls.Add(this.groupDownloadDirectory);
             this.tabOptions.Controls.Add(this.panel1);
             this.tabOptions.Controls.Add(this.checkUpdatesOnStartup);
             this.tabOptions.Controls.Add(this.checkMinimizeToTray);
@@ -612,6 +619,61 @@
             this.tabOptions.TabIndex = 5;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // groupDownloadDirectory
+            // 
+            this.groupDownloadDirectory.Controls.Add(this.buttonDownloadDirectoryOpen);
+            this.groupDownloadDirectory.Controls.Add(this.textDownloadDirectory);
+            this.groupDownloadDirectory.Controls.Add(this.radioDownloadDirectoryCustom);
+            this.groupDownloadDirectory.Controls.Add(this.radioDownloadDirectoryDefault);
+            this.groupDownloadDirectory.Location = new System.Drawing.Point(6, 52);
+            this.groupDownloadDirectory.Name = "groupDownloadDirectory";
+            this.groupDownloadDirectory.Size = new System.Drawing.Size(444, 108);
+            this.groupDownloadDirectory.TabIndex = 5;
+            this.groupDownloadDirectory.TabStop = false;
+            this.groupDownloadDirectory.Text = "Download && Unpack Directory";
+            // 
+            // buttonDownloadDirectoryOpen
+            // 
+            this.buttonDownloadDirectoryOpen.Location = new System.Drawing.Point(6, 68);
+            this.buttonDownloadDirectoryOpen.Name = "buttonDownloadDirectoryOpen";
+            this.buttonDownloadDirectoryOpen.Size = new System.Drawing.Size(432, 30);
+            this.buttonDownloadDirectoryOpen.TabIndex = 3;
+            this.buttonDownloadDirectoryOpen.Text = "Open Current Selected Directory";
+            this.buttonDownloadDirectoryOpen.UseVisualStyleBackColor = true;
+            this.buttonDownloadDirectoryOpen.Click += new System.EventHandler(this.buttonDownloadDirectoryOpen_Click);
+            // 
+            // textDownloadDirectory
+            // 
+            this.textDownloadDirectory.Location = new System.Drawing.Point(115, 42);
+            this.textDownloadDirectory.Name = "textDownloadDirectory";
+            this.textDownloadDirectory.Size = new System.Drawing.Size(323, 20);
+            this.textDownloadDirectory.TabIndex = 2;
+            this.textDownloadDirectory.TextChanged += new System.EventHandler(this.textDownloadDirectory_TextChanged);
+            // 
+            // radioDownloadDirectoryCustom
+            // 
+            this.radioDownloadDirectoryCustom.AutoSize = true;
+            this.radioDownloadDirectoryCustom.Location = new System.Drawing.Point(6, 42);
+            this.radioDownloadDirectoryCustom.Name = "radioDownloadDirectoryCustom";
+            this.radioDownloadDirectoryCustom.Size = new System.Drawing.Size(103, 17);
+            this.radioDownloadDirectoryCustom.TabIndex = 1;
+            this.radioDownloadDirectoryCustom.TabStop = true;
+            this.radioDownloadDirectoryCustom.Text = "Custom directory";
+            this.radioDownloadDirectoryCustom.UseVisualStyleBackColor = true;
+            this.radioDownloadDirectoryCustom.CheckedChanged += new System.EventHandler(this.radioDownloadDirectoryDefault_CheckedChanged);
+            // 
+            // radioDownloadDirectoryDefault
+            // 
+            this.radioDownloadDirectoryDefault.AutoSize = true;
+            this.radioDownloadDirectoryDefault.Location = new System.Drawing.Point(6, 19);
+            this.radioDownloadDirectoryDefault.Name = "radioDownloadDirectoryDefault";
+            this.radioDownloadDirectoryDefault.Size = new System.Drawing.Size(223, 17);
+            this.radioDownloadDirectoryDefault.TabIndex = 0;
+            this.radioDownloadDirectoryDefault.TabStop = true;
+            this.radioDownloadDirectoryDefault.Text = "Windows Application Data folder / Wampi";
+            this.radioDownloadDirectoryDefault.UseVisualStyleBackColor = true;
+            this.radioDownloadDirectoryDefault.CheckedChanged += new System.EventHandler(this.radioDownloadDirectoryDefault_CheckedChanged);
             // 
             // panel1
             // 
@@ -765,6 +827,8 @@
             this.flowPluginsTop.ResumeLayout(false);
             this.tabOptions.ResumeLayout(false);
             this.tabOptions.PerformLayout();
+            this.groupDownloadDirectory.ResumeLayout(false);
+            this.groupDownloadDirectory.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tabAbout.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -828,6 +892,11 @@
         private System.Windows.Forms.RichTextBox richAbout;
         private System.Windows.Forms.CheckBox checkAppendSource;
         private System.Windows.Forms.Button buttonUpdateCheck;
+        private System.Windows.Forms.GroupBox groupDownloadDirectory;
+        private System.Windows.Forms.Button buttonDownloadDirectoryOpen;
+        private System.Windows.Forms.TextBox textDownloadDirectory;
+        private System.Windows.Forms.RadioButton radioDownloadDirectoryCustom;
+        private System.Windows.Forms.RadioButton radioDownloadDirectoryDefault;
 
 
 
